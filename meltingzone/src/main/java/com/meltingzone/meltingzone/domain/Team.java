@@ -22,5 +22,5 @@ public class Team extends TimeStamped {
     private String teamName;
 
     @Column
-    private int score;
+    private int score = 0;
 }
