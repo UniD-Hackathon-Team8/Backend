@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/template")
@@ -15,10 +17,33 @@ public class TemplateController {
     private final TemplateService templateService;
 
     @PostMapping
-    public ResponseEntity<ResponseMessage> createTemplate(@RequestBody TemplateRequestDto requestDto) {
+    public ResponseEntity<ResponseMessage> createTemplate(
+            @RequestBody TemplateRequestDto requestDto,
+            HttpServletRequest request
+    ) {
+        String email = request.getUserPrincipal().getName();
+
         return ResponseMessage.toResponseEntity(
                 ResponseCode.OK,
-                templateService.createTemplate(requestDto)
+                templateService.createTemplate(requestDto, email)
+        );
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseMessage> readMyTemplate(HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                templateService.readMyTemplate(email)
+        );
+    }
+
+    @GetMapping("/{templateId}")
+    public ResponseEntity<ResponseMessage> readTemplateDetail(@PathVariable Long templateId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                templateService.readTemplateDetail(templateId)
         );
     }
 

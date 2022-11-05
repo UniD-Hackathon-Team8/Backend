@@ -42,9 +42,10 @@ public class Template extends TimeStamped {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "template")
     private List<Item> itemList = new ArrayList<>();
 
-    public Template(TemplateRequestDto requestDto, Game game) {
+    public Template(TemplateRequestDto requestDto, Game game, User user) {
         this.templateName = requestDto.getTemplateName();
         this.game = game;
+        this.user = user;
     }
 
     public void addItem(Item item) {
