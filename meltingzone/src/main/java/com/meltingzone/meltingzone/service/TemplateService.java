@@ -79,4 +79,12 @@ public class TemplateService {
                 itemRepository.delete(item)
         );
     }
+
+    public void deleteTemplate(Long templateId) {
+        Template template = templateRepository.findById(templateId).orElseThrow(
+                () -> new CustomException(ResponseCode.TEMPLATE_NOT_FOUND)
+        );
+
+        templateRepository.delete(template);
+    }
 }

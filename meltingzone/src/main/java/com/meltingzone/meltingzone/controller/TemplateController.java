@@ -29,4 +29,13 @@ public class TemplateController {
                 templateService.updateTemplate(templateId, requestDto)
         );
     }
+
+    @DeleteMapping("/{templateId}")
+    public ResponseEntity<ResponseMessage> deleteTemplate(@PathVariable Long templateId) {
+        templateService.deleteTemplate(templateId);
+
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK
+        );
+    }
 }
