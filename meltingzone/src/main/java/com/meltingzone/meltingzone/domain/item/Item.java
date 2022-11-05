@@ -12,7 +12,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "dtype")
 @Getter
 @Setter
-public abstract class Item extends TimeStamped {
+public abstract class Item {
 
     @Id
     @GeneratedValue
@@ -21,11 +21,11 @@ public abstract class Item extends TimeStamped {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
-    private Template template;
+    protected Template template;
 
     @Column(length = 30)
-    private String answer;
+    protected String answer;
 
     @Column
-    private boolean isWatched;
+    protected boolean isWatched;
 }

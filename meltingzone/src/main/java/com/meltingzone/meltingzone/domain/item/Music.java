@@ -1,5 +1,7 @@
 package com.meltingzone.meltingzone.domain.item;
 
+import com.meltingzone.meltingzone.domain.Template;
+import com.meltingzone.meltingzone.dto.template.ItemRequestDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,4 +17,10 @@ public class Music extends Item {
 
     @Column
     private String musicUrl;
+
+    public Music(ItemRequestDto requestDto, Template template) {
+        this.answer = requestDto.getAnswer();
+        this.musicUrl = requestDto.getMusic_url();
+        this.template = template;
+    }
 }
