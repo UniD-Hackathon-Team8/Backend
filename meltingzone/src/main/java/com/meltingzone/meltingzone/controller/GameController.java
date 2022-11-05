@@ -38,4 +38,12 @@ public class GameController {
                 gameService.readAllOwnGame()
         );
     }
+
+    @GetMapping("/{gameId}")
+    public ResponseEntity<ResponseMessage> readGameDetail(@PathVariable Long gameId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                gameService.readGameDetail(gameId)
+        );
+    }
 }
