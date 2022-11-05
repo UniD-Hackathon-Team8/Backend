@@ -35,7 +35,15 @@ public class GameController {
     public ResponseEntity<ResponseMessage> readAllCustomGames() {
         return ResponseMessage.toResponseEntity(
                 ResponseCode.OK,
-                gameService.readAllOwnGame()
+                gameService.readAllCustomGame()
+        );
+    }
+
+    @GetMapping("/{gameId}")
+    public ResponseEntity<ResponseMessage> readGameDetail(@PathVariable Long gameId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                gameService.readGameDetail(gameId)
         );
     }
 }

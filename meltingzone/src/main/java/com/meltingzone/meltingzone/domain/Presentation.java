@@ -25,4 +25,7 @@ public class Presentation extends TimeStamped {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation")
     private List<Team> teamList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation")
+    private List<Template> templateList = new ArrayList<>();
 }
