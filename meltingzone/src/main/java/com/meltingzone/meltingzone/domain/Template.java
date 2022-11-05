@@ -25,8 +25,16 @@ public class Template extends TimeStamped {
     @JoinColumn(name = "game_id")
     private Game game;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(length = 30)
     private String templateName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "presentation_id")
+    private Presentation presentation;
 
     @Column
     private boolean isWatched = false;

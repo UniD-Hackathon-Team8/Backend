@@ -33,6 +33,9 @@ public class User extends TimeStamped implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Presentation> presentationList = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Template> templateList = new ArrayList<>();
+
     public User(UserRequestDto requestDto) {
         this.email = requestDto.getEmail();
         this.password = requestDto.getPassword();
