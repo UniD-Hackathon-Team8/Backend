@@ -6,12 +6,7 @@ import java.util.List;
 
 @Data
 public class PresentationPostRequestDto {
+    private String presentationName;
     private int teamCount;
-    private List<TemplateGetRequestDto> templates;
-}
-
-@Data
-class TemplateGetRequestDto {
-    private Long templateId;
-    private String templateName;
+    private List<Long> templateIdList;
 }

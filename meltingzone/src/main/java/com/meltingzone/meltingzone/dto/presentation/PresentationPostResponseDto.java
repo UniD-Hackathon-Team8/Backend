@@ -11,20 +11,3 @@ public class PresentationPostResponseDto {
     private List<TemplatePostResponseDto> templates;
 }
 
-@Data
-class TeamPostResponseDto {
-    private Long teamId;
-    private String teamName;
-}
-
-@Data
-class TemplatePostResponseDto {
-    private Long templateId;
-    private String templateName;
-    private List<ItemPostResponseDto> items;
-}
-
-@Data
-class ItemPostResponseDto {
-    private Long itemId;
-}
