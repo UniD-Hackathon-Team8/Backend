@@ -39,6 +39,14 @@ public class TemplateController {
         );
     }
 
+    @GetMapping("/{templateId}")
+    public ResponseEntity<ResponseMessage> readTemplateDetail(@PathVariable Long templateId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                templateService.readTemplateDetail(templateId)
+        );
+    }
+
     @PatchMapping("/{templateId}")
     public ResponseEntity<ResponseMessage> updateTemplate(@PathVariable Long templateId,  @RequestBody TemplateRequestDto requestDto) {
         return ResponseMessage.toResponseEntity(

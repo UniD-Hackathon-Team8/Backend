@@ -7,6 +7,7 @@ import com.meltingzone.meltingzone.domain.item.Character;
 import com.meltingzone.meltingzone.domain.item.Consonant;
 import com.meltingzone.meltingzone.domain.item.Music;
 import com.meltingzone.meltingzone.dto.template.ItemRequestDto;
+import com.meltingzone.meltingzone.dto.template.TemplateDetailResponseDto;
 import com.meltingzone.meltingzone.dto.template.TemplateRequestDto;
 import com.meltingzone.meltingzone.dto.template.TemplateResponseDto;
 import com.meltingzone.meltingzone.repository.GameRepository;
@@ -110,5 +111,13 @@ public class TemplateService {
         );
 
         templateRepository.delete(template);
+    }
+
+    public TemplateDetailResponseDto readTemplateDetail(Long templateId) {
+        Template template = templateRepository.findById(templateId).orElseThrow(
+                () -> new CustomException(ResponseCode.TEMPLATE_NOT_FOUND)
+        );
+        
+        return new TemplateDetailResponseDto(template);
     }
 }
