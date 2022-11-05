@@ -24,7 +24,14 @@ public class GameService {
 
     public List<GameResponseDto> readAllOwnGame() {
         List<GameResponseDto> response = new ArrayList<>();
-        gameRepository.findAllByIsCustom(false).stream().forEach( game -> response.add(new GameResponseDto(game)));
+        gameRepository.findAllByIsCustom(false).stream().forEach(game -> response.add(new GameResponseDto(game)));
+
+        return response;
+    }
+
+    public List<GameResponseDto> readAllCustomGame() {
+        List<GameResponseDto> response = new ArrayList<>();
+        gameRepository.findAllByIsCustom(true).stream().forEach(game -> response.add(new GameResponseDto(game)));
 
         return response;
     }
