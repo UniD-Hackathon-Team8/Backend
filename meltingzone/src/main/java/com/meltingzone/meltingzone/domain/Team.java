@@ -1,7 +1,12 @@
 package com.meltingzone.meltingzone.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Entity
+@Getter @Setter
 public class Team extends TimeStamped {
 
     @Id
@@ -10,7 +15,7 @@ public class Team extends TimeStamped {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "presentation_id")
     private Presentation presentation;
 
     @Column(length = 20)
