@@ -5,6 +5,7 @@ import com.meltingzone.meltingzone.domain.Template;
 import com.meltingzone.meltingzone.domain.item.Character;
 import com.meltingzone.meltingzone.domain.item.Consonant;
 import com.meltingzone.meltingzone.domain.item.Music;
+import com.meltingzone.meltingzone.dto.template.ItemRequestDto;
 import com.meltingzone.meltingzone.dto.template.TemplateRequestDto;
 import com.meltingzone.meltingzone.repository.GameRepository;
 import com.meltingzone.meltingzone.repository.ItemRepository;
@@ -13,8 +14,12 @@ import com.meltingzone.meltingzone.util.CustomException;
 import com.meltingzone.meltingzone.util.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TemplateService {
     private final TemplateRepository templateRepository;
@@ -25,10 +30,29 @@ public class TemplateService {
         Game game = gameRepository.findById(requestDto.getGameId()).orElseThrow(
                 () -> new CustomException(ResponseCode.GAME_NOT_FOUND)
         );
-        Template template = new Template(requestDto, game);
-        templateRepository.save(template);
 
-        requestDto.getItems().forEach( itemDto -> {
+        Template template = templateRepository.save(new Template(requestDto, game));
+        createItems(requestDto.getItems(), template);
+
+        return template.getId();
+    }
+
+    public Long updateTemplate(Long templateId, TemplateRequestDto requestDto) {
+        Template template = templateRepository.findById(templateId).orElseThrow(
+                () -> new CustomException(ResponseCode.TEMPLATE_NOT_FOUND)
+        );
+
+        deleteAllTemplateItems(template);
+        template.initItemList();
+
+        template.updateTemplateName(requestDto.getTemplateName());
+        createItems(requestDto.getItems(), template);
+
+        return template.getId();
+    }
+
+    public void createItems(List<ItemRequestDto> itemDtoList, Template template) {
+        itemDtoList.forEach( itemDto -> {
             switch(itemDto.getItemType()) {
                 case "MUSIC":
                     Music music = new Music(itemDto, template);
@@ -48,15 +72,11 @@ public class TemplateService {
             }
         });
         templateRepository.save(template);
-
-        return template.getId();
     }
 
-    public Long updateTemplate(Long templateId, TemplateRequestDto requestDto) {
-        Template template = templateRepository.findById(templateId).orElseThrow(
-                () -> new CustomException(ResponseCode.TEMPLATE_NOT_FOUND)
+    public void deleteAllTemplateItems(Template template) {
+        template.getItemList().forEach( item ->
+                itemRepository.delete(item)
         );
-
-        template.
     }
 }

@@ -9,5 +9,4 @@ public class ItemRequestDto {
     private String character_url = null;
     private String consonant_question = null;
     private String music_url = null;
-    private Long template_id;
 }

@@ -43,5 +43,11 @@ public class Template extends TimeStamped {
         this.itemList.add(item);
     }
 
-    public void update(TemplateRequ)
+    public void updateTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    public void initItemList() {
+        this.itemList = new ArrayList<>();
+    }
 }

@@ -26,7 +26,7 @@ public class TemplateController {
     public ResponseEntity<ResponseMessage> updateTemplate(@PathVariable Long templateId,  @RequestBody TemplateRequestDto requestDto) {
         return ResponseMessage.toResponseEntity(
                 ResponseCode.OK,
-                updateTemplate(templateId, requestDto)
+                templateService.updateTemplate(templateId, requestDto)
         );
     }
 }
