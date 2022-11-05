@@ -5,15 +5,16 @@ import com.meltingzone.meltingzone.domain.Presentation;
 import com.meltingzone.meltingzone.domain.Team;
 import com.meltingzone.meltingzone.domain.Template;
 import com.meltingzone.meltingzone.domain.User;
+import com.meltingzone.meltingzone.domain.item.Character;
+import com.meltingzone.meltingzone.domain.item.Consonant;
 import com.meltingzone.meltingzone.domain.item.Item;
+import com.meltingzone.meltingzone.domain.item.Music;
 import com.meltingzone.meltingzone.dto.presentation.PresentationPostRequestDto;
 import com.meltingzone.meltingzone.dto.presentation.PresentationPostResponseDto;
 import com.meltingzone.meltingzone.dto.presentation.TeamPostResponseDto;
 import com.meltingzone.meltingzone.dto.presentation.TemplatePostResponseDto;
-import com.meltingzone.meltingzone.repository.PresentationRepository;
-import com.meltingzone.meltingzone.repository.TeamRepository;
-import com.meltingzone.meltingzone.repository.TemplateRepository;
-import com.meltingzone.meltingzone.repository.UserRepository;
+import com.meltingzone.meltingzone.dto.template.ItemResponseDto;
+import com.meltingzone.meltingzone.repository.*;
 import com.meltingzone.meltingzone.util.CustomException;
 import com.meltingzone.meltingzone.util.ResponseCode;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class PresentationService {
     private final TemplateRepository templateRepository;
     private final TeamRepository teamRepository;
     private final PresentationRepository presentationRepository;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final ItemRepository itemRepository;
 
     public PresentationPostResponseDto createPresentation(PresentationPostRequestDto requestDto, String email) {
         Presentation presentation = new Presentation();
@@ -105,5 +106,27 @@ public class PresentationService {
             responseDtos.add(responseDto);
         }
         return responseDtos;
+    }
+
+    public ItemResponseDto getNextItem(Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new CustomException(ResponseCode.ITEM_NOT_FOUND));
+        String answer = item.getAnswer();
+        String itemType = null;
+        String musicUrl = null;
+        String characterUrl = null;
+        String consonantQuestion = null;
+        if (item instanceof Music) {
+            musicUrl = ((Music) item).getMusicUrl();
+            itemType = "MUSIC";
+        } else if (item instanceof Consonant) {
+            consonantQuestion = ((Consonant) item).getConsonantQuestion();
+            itemType = "CONSONANT";
+        } else if (item instanceof Character) {
+            characterUrl = ((Character) item).getCharacterUrl();
+            itemType = "CHARACTER";
+        }
+
+        return new ItemResponseDto(itemType, answer, characterUrl, consonantQuestion, musicUrl);
     }
 }

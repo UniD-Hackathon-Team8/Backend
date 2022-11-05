@@ -7,10 +7,7 @@ import com.meltingzone.meltingzone.util.ResponseCode;
 import com.meltingzone.meltingzone.util.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +25,14 @@ public class PresentationController {
         return ResponseMessage.toResponseEntity(
                 ResponseCode.OK,
                 presentationService.createPresentation(requestDto, email)
+        );
+    }
+
+    @PatchMapping("/template/{itemId}")
+    public ResponseEntity<ResponseMessage> changeToNextItem(@PathVariable Long itemId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                presentationService.getNextItem(itemId)
         );
     }
 }
