@@ -35,7 +35,7 @@ public class GameController {
     public ResponseEntity<ResponseMessage> readAllCustomGames() {
         return ResponseMessage.toResponseEntity(
                 ResponseCode.OK,
-                gameService.readAllOwnGame()
+                gameService.readAllCustomGame()
         );
     }
 }
