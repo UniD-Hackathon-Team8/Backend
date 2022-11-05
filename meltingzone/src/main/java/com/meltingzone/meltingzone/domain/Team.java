@@ -1,12 +1,14 @@
 package com.meltingzone.meltingzone.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Team extends TimeStamped {
 
     @Id
@@ -22,5 +24,5 @@ public class Team extends TimeStamped {
     private String teamName;
 
     @Column
-    private int score;
+    private int score = 0;
 }
