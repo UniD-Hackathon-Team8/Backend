@@ -28,6 +28,8 @@ public enum ResponseCode {
     // team
     TEAM_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 ID의 팀이 존재하지 않습니다."),
 
+    // item
+    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 ID의 아이템이 존재하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;
