@@ -35,4 +35,20 @@ public class PresentationController {
                 presentationService.getNextItem(itemId)
         );
     }
+
+    @GetMapping("/{presentationId}")
+    public ResponseEntity<ResponseMessage> getTeamScore(@PathVariable Long presentationId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                presentationService.getPresentationResult(presentationId)
+        );
+    }
+
+    @GetMapping("/show/{presentationId}")
+    public ResponseEntity<ResponseMessage> getResumed(@PathVariable Long presentationId) {
+        return ResponseMessage.toResponseEntity(
+                ResponseCode.OK,
+                presentationService.getResumed(presentationId)
+        );
+    }
 }
