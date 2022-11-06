@@ -25,6 +25,9 @@ public enum ResponseCode {
 
     // presentation
 
+    // team
+    TEAM_NOT_FOUND(HttpStatus.NOT_FOUND, false, "해당 ID의 팀이 존재하지 않습니다."),
+
     ;
 
     private final HttpStatus httpStatus;

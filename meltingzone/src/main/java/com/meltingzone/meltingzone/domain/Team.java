@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Team extends TimeStamped {
 
@@ -25,4 +25,13 @@ public class Team extends TimeStamped {
 
     @Column
     private int score = 0;
+
+    public Team(String teamName, Presentation presentation) {
+        this.teamName = teamName;
+        this.presentation = presentation;
+    }
+
+    public void updateScore(int score) {
+        this.score = score;
+    }
 }

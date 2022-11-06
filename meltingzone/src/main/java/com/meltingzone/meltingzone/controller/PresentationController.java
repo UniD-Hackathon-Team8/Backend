@@ -2,15 +2,13 @@ package com.meltingzone.meltingzone.controller;
 
 import com.meltingzone.meltingzone.dto.game.GameRequestDto;
 import com.meltingzone.meltingzone.dto.presentation.PresentationPostRequestDto;
+import com.meltingzone.meltingzone.dto.presentation.TeamScoreRequestDto;
 import com.meltingzone.meltingzone.service.PresentationService;
 import com.meltingzone.meltingzone.util.ResponseCode;
 import com.meltingzone.meltingzone.util.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,5 +27,11 @@ public class PresentationController {
                 ResponseCode.OK,
                 presentationService.createPresentation(requestDto, email)
         );
+    }
+
+    @PatchMapping("/team/{teamId}")
+    public ResponseEntity<ResponseMessage> updateScore(@PathVariable Long teamId, @RequestBody TeamScoreRequestDto requestDto) {
+        presentationService.updateTeamScore(teamId, requestDto.getScore());
+        return ResponseMessage.toResponseEntity(ResponseCode.OK);
     }
 }

@@ -1,6 +1,5 @@
 package com.meltingzone.meltingzone.service;
 
-import com.meltingzone.meltingzone.auth.CustomUserDetailsService;
 import com.meltingzone.meltingzone.domain.Presentation;
 import com.meltingzone.meltingzone.domain.Team;
 import com.meltingzone.meltingzone.domain.Template;
@@ -33,7 +32,6 @@ public class PresentationService {
     private final TemplateRepository templateRepository;
     private final TeamRepository teamRepository;
     private final PresentationRepository presentationRepository;
-    private final CustomUserDetailsService customUserDetailsService;
 
     public PresentationPostResponseDto createPresentation(PresentationPostRequestDto requestDto, String email) {
         Presentation presentation = new Presentation();
@@ -71,9 +69,7 @@ public class PresentationService {
     private List<Team> saveTeamReturnTeamList(int teamCount, Presentation presentation) {
         List<Team> teamList= new ArrayList<>();
         for (int i = 1; i <= teamCount; i++) {
-            Team team = new Team();
-            team.setTeamName(i + "조");
-            team.setPresentation(presentation);
+            Team team = new Team(i + "조", presentation);
             teamRepository.save(team);
             teamList.add(team);
         }
@@ -105,5 +101,14 @@ public class PresentationService {
             responseDtos.add(responseDto);
         }
         return responseDtos;
+    }
+
+    public void updateTeamScore(Long teamId, int score) {
+        Team team = teamRepository.findById(teamId).orElseThrow(
+                () -> new CustomException(ResponseCode.TEAM_NOT_FOUND)
+        );
+
+        team.updateScore(score);
+        teamRepository.save(team);
     }
 }
